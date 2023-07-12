@@ -1,10 +1,43 @@
-import React from 'react';
-import { Text, View } from "react-native";
+import React, { useLayoutEffect } from 'react';
+import { StatusBar, View } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-export const MapPage = () => {
+import { indexStyles } from '../../../indexStyles';
+import { styles } from './styles';
+
+import { DefaultButton } from '../../Components/Button/DefaultButton';
+
+type Props = {
+  navigation: NativeStackNavigationProp<any, 'Home'>
+}
+
+export const MapPage: React.FC<Props> = ({ navigation }) => {
+  const handleHomeButton = () => {
+    navigation.navigate('Home');
+  };
+  
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: '#1a202c'
+      },
+      headerTitleAlign: 'center',
+      headerTintColor: '#fff',
+      headerBackVisible: false
+    });
+    
+    StatusBar.setBarStyle('light-content');
+  }, [navigation]);
+  
   return (
-    <View>
-      <Text>Map Page</Text>
+    <View style={indexStyles.container}>
+      <View style={styles.buttonContainer}>
+        <DefaultButton
+          color='#1a202c'
+          title='Home'
+          onButtonClick={handleHomeButton}
+        />
+      </View>
     </View>
   );
 };
